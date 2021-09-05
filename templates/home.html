@@ -1,5 +1,25 @@
 {%extends 'layout.html' %}
 
 {% block content%}
-    <h1>HOme</h1>
+<section id='home'>
+    <div class="container-fluid">
+        <div class="row">
+            <img class="img-fluid" src="{{url_for('static', filename='img/capa_nova.png')}}" alt="Foto de um notebook"
+                height="820px">
+        </div>
+        <div class="name">
+            <h1>Edmar</h1>
+            <h2>Análise e Desenvolvimento de Sistema</h2>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <h1>Desenvolvimento em Back End</h1>
+        <p>Eu Amo python</p>
+        <span>Desenvolvido por José Edmar, 05 de Setembro de 2021</span>
+        <hr>
+        
+    </div>
+</section>
 {% endblock %}
