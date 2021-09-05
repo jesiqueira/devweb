@@ -18,19 +18,25 @@
 </head>
 
 <body>
-    <div class="d-flex bd-dark mb-3">
-        <div class="me-auto p-2 bd-highlight">Flex item</div>
-        <div class="p-2 bd-highlight">Flex item</div>
-        <div class="p-2 bd-highlight">Flex item</div>
-      </div>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">Home</a>
-        <ul class="navbar-nav d-flex">
-            <li class="nav-item me-auto"><a href="#" class="nav-link">Sobre</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Contato</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
-        </ul>
-    </nav>
+    <section id="title">
+        <!-- Nav Bar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+            <a href="/" class="navbar-brand">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
+                aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarScroll">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ml"><a href="about" class="nav-link">Sobre</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contato</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+                </ul>
+            </div>
+        </nav>
+
+    </section>
+
     {% block content %}{% endblock %}
 
     <!-- Popper and Bootstrap JS -->
