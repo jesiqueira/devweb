@@ -8,9 +8,20 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+
+@app.route('/contato')
+def contato():
+    return render_template('contato.html')
+
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 
 if __name__ == '__main__':

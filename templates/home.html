@@ -4,22 +4,31 @@
 <section id='home'>
     <div class="container-fluid">
         <div class="row">
-            <img class="img-fluid" src="{{url_for('static', filename='img/capa_nova.png')}}" alt="Foto de um notebook"
-                height="820px">
-        </div>
-        <div class="name">
-            <h1>Edmar</h1>
-            <h2>Análise e Desenvolvimento de Sistema</h2>
+            <img class="img-fluid" src="{{url_for('static', filename='img/capa2.png')}}" alt="Foto de um notebook">
+            <div class="name">
+                <h1 class="fs-1">J.E.SIQUEIRA</h1>
+                <h2 class="fs-5">Análise e Desenvolvimento de Sistemas</h2>
+            </div>
         </div>
     </div>
 </section>
-<section>
+<section id="info">
     <div class="container-fluid">
-        <h1>Desenvolvimento em Back End</h1>
-        <p>Eu Amo python</p>
-        <span>Desenvolvido por José Edmar, 05 de Setembro de 2021</span>
+        <div class="row">
+            <h1 class="fs-1">Back End & Front End</h1>
+            <p class="fs-5">
+                It is a long established fact that a reader will be distracted by the readable content of a
+                page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                distribution of letters, as opposed to using 'Content here, content here', making it look like readable
+                English.<br>
+                It is a long established fact that a reader will be distracted by the readable content of a
+                page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal
+                distribution of letters, as opposed to using 'Content here, content here', making it look like readable
+                English.
+            </p>
+        </div>
         <hr>
-        
+
     </div>
 </section>
 {% endblock %}

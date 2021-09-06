@@ -39,18 +39,36 @@
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a href="about" class="nav-link">Sobre</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">Contato</a></li>
-                            <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
+                            <li class="nav-item"><a href="contato" class="nav-link">Contato</a></li>
+                            <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
                         </ul>
                     </div>
                 </nav>
             </div>
         </div>
-        
+
     </section>
-    
+
     {% block content %}{% endblock %}
 
+    <section id="footer">
+        <div class="container-fluid">
+            <div class="row" >
+                <div class="col align-self-start">
+                    <a href="https://www.facebook.com/joseedmar.siqueira.9/" target="_blank"><img src="{{url_for('static', filename='/img/face.png')}}" class="img-fluid imagem" alt="Imagem do facebook"> </a>
+                </div>
+                <div class="col align-self-center">
+                    <a href="https://github.com/jesiqueira" target="_blank"><img src="{{url_for('static', filename='/img/guit_nova.png')}}" class="img-fluid imagem" alt="Imagem do guithub"> </a>
+                </div>
+                <div class="col align-self-end">
+                    <a href="https://www.linkedin.com/in/jos%C3%A9-edmar-siqueira-651a4b177/" target="_blank"><img src="{{url_for('static', filename='/img/linkedin_100.png')}}" class="img-fluid imagem" alt="Imagem do linkedin"> </a>
+                </div>
+            </div>
+            <div class="row">
+                <h6 class="text-center fs-4 copyright">Copyright &copy; Setembro de 2021</h6>
+            </div>
+        </div>
+    </section>
 
     <!-- Popper and Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"

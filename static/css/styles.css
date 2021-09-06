@@ -17,11 +17,14 @@ body{
     padding: 2% 20%;
 }
 
-#home h1{
-    font-size: 5rem;
-}
 #home .name{
-    margin-top: -150px;
+    margin-top: -50px;
+    line-height: 1.5rem;
+    font-family: "Montserrat-brack";
+}
+
+#info .row{
+    padding: 2% 20%;
     line-height: 1.5rem;
     font-family: "Montserrat-brack";
 }
@@ -41,3 +44,18 @@ body{
     font-size: 3rem;
 }
 
+
+/* footer */
+#footer .container-fluid{
+    padding: 2% 20%;
+}
+
+#footer .row .imagem{
+    padding-left: 30%;
+}
+
+#footer .copyright{
+    font-family: "Montserrat-Light";
+    /* font-size: 3rem; */
+    padding-top: 3%;
+}
