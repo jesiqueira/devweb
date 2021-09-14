@@ -24,12 +24,12 @@
 </head>
 
 <body>
-    <section id="title">
+    <section id="{% if title == 'Home' %}title{% else %}site{% endif %}">
         <!-- Nav Bar -->
         <div class="container-fluid">
 
             <div class="row">
-                <nav class="navbar navbar-expand-lg navbar-dark px-3">
+                <nav class="navbar navbar-expand-lg {% if title == 'Home' %} navbar-dark {% else %}navbar-light{% endif %} px-3">
                     <a href="/" class="navbar-brand">Home</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false"
