@@ -54,6 +54,12 @@ body{
 #site .container-fluid{
     padding: 0% 20%;
 }
+#site .nav-link{
+    font-size: 1.5rem;
+    font-family: "Montserrat-Light";
+}
+
+
 
 /* footer */
 #footer .container-fluid{

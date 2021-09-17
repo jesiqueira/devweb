@@ -1,3 +1,13 @@
-.img-home img{
-    padding-top: 70%;
+.about{
+    font-family: "Montserrat-brack";
+    text-align: justify;
 }
+.container.about-container{
+    padding: 0px;
+}
+.about-data{
+    font-size: 2em;
+}
+/* .img-home img{
+    height: 70%;
+} */
