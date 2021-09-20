@@ -8,3 +8,8 @@ python run.py runserver
 python run.py db init
 python run.py db migrate
 python run.py db upgrade
+
+
+----Criar chave seguras-----
+import secrets
+secrets.token_hex(16)

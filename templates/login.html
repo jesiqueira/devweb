@@ -1,5 +1,39 @@
 {%extends 'layout.html' %}
 
 {% block content%}
-    <h1>Login</h1>
+<div class="container-fluid">
+
+    <main class="form-signin">
+        <form action="" method="POST">
+            {{ form.hidden_tag()}}
+            <h1 class="h3 mb-4 fw-normal">Conectar</h1>
+
+            <div class="form-floating mb-3">
+                {{form.email(class='form-control', placeholder="Digite seu Email")}}
+                {{form.email.label()}}
+            </div>
+            <div class="form-floating mb-3">
+                {{form.password(class='form-control', placeholder="Digite seu password")}}
+                {{form.password.label()}}
+            </div>
+
+            <div class="checkbox mb-3">
+                {{ form.remember()}}
+                {{ form.remember.label()}}
+            </div>
+            <button class="w-100 btn btn-lg btn-primary mb-5" type="submit">Entrar</button>
+            <small class="text-muted mb-3">
+                <a href="#" class="text-decoration-none fw-bold">Redefinir Senha?</a>
+            </small>
+            <div class="border-top mt-4">
+                <small class="text-muted">
+                    Nova conta <a class='text-decoration-none fw-bold' href="{{ url_for('contato') }}" >Escreva-se agora</a>
+                </small>
+            </div>
+            <!-- <hr class="mt-5"> -->
+
+        </form>
+    </main>
+
+</div>
 {% endblock %}

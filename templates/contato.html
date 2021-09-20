@@ -1,5 +1,59 @@
 {%extends 'layout.html' %}
 
 {% block content%}
-    <h1>Contato</h1>
+<div class="container-fluid">
+    <h4>Por que entrar em contato!</h4>
+    <p>
+        Aqui você pode enviar informações, dicas, relatar possiveis erros e falhas que possam acontecer nesse site,
+        além de me contatar para solicitar orçamento caso tenha interesse em desenvolver seu site.
+    </p>
+    <p>
+        Preencha seus dados e descreva, caso seja necessário entrarei em contato com você para
+        conversamos sobre o seu contato.
+    </p>
+    <form action="" method="POST">
+        {{ form.hidden_tag()}}
+        <legend class="border-bottom mb-4 mt-4">Preencha as informação para contato</legend>
+        <div class="form-floating mb-3">
+            {% if form.username.errors %}
+                {{form.username(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.username(class='form-control', placeholder="Digite seu Username")}}
+            {% endif %}
+
+            {{form.username.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.email.errors %}
+                {{ form.email(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.email(class='form-control', placeholder="email@email.com")}}
+            {% endif %}
+            {{form.email.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {{form.phone(class='form-control', placeholder="(99)99999-9999")}}
+            {{form.phone.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {{form.texto(class='form-control', placeholder="Informe seu Username")}}
+            {{form.texto.label()}}
+        </div>
+        <div class="form-group mt-5">
+            {{ form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+
+    <hr class="mt-5">
+</div>
 {% endblock %}
