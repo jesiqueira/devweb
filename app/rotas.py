@@ -1,19 +1,7 @@
-from flask import Flask, render_template, flash, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
-from controllers.forms import ContatoForm, LoginForm
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = '709bb33e1d3b513e4a9ee78a2a940063'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-
-db = SQLAlchemy(app)
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String(30), unique=True, nullable=False)
-
+from flask import render_template, flash, redirect, url_for
+from app import app, db, bcrypt
+from app.controllers.forms import ContatoForm, LoginForm, RegistroForm
+from app.models.models import User, Login
 
 dados_cv = [
     {
@@ -65,11 +53,18 @@ def contato():
     return render_template('contato.html', title='Contato', form=form)
 
 
+@app.route('/cadastro', methods=['GET', 'POST'])
+def cadastro():
+    form = RegistroForm()
+
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        print('tudo certo')
+        return redirect(url_for('home'))
+    return render_template('cadastro.html', title='Cadastro', form=form)
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     return render_template('login.html', title='Login', form=form)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

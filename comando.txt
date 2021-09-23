@@ -13,3 +13,10 @@ python run.py db upgrade
 ----Criar chave seguras-----
 import secrets
 secrets.token_hex(16)
+
+
+------------Criar BD local------
+db.create_all()
+db.session.add(tabelas)
+db.session.commit()
+db.drop_all()

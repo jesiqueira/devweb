@@ -1,0 +1,86 @@
+{%extends 'layout.html' %}
+
+{% block content%}
+<div class="container-fluid">
+    <h4>Preencher Todos os campos para se cadastrar!</h4>
+    <br><br>
+    <form action="" method="POST">
+        {{ form.hidden_tag()}}
+        <!-- <legend class="border-bottom mb-4 mt-4">Preencha dados do Formulário</legend> -->
+        <div class="form-floating mb-3">
+            {% if form.username.errors %}
+                {{form.username(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.username(class='form-control', placeholder="Digite seu Username")}}
+            {% endif %}
+
+            {{form.username.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.cpf.errors %}
+                {{form.cpf(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.cpf.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.cpf(class='form-control', placeholder="Digite seu cpf")}}
+            {% endif %}
+
+            {{form.cpf.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.email.errors %}
+                {{ form.email(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.email(class='form-control', placeholder="email@email.com")}}
+            {% endif %}
+            {{form.email.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.password.errors %}
+                {{form.password(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.password(class='form-control', placeholder="Digite seu password")}}
+            {% endif %}
+
+            {{form.password.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.password_conf.errors %}
+                {{form.password_conf(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.password_conf.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.password_conf(class='form-control', placeholder="Digite seu password_conf")}}
+            {% endif %}
+
+            {{form.password_conf.label()}}
+        </div>
+        <div class="form-group mt-5">
+            {{ form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+
+    <hr class="mt-5">
+</div>
+{% endblock %}
