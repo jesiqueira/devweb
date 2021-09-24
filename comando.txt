@@ -18,5 +18,6 @@ secrets.token_hex(16)
 ------------Criar BD local------
 db.create_all()
 db.session.add(tabelas)
+db.session.delete(tabela)
 db.session.commit()
 db.drop_all()
