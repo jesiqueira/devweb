@@ -21,7 +21,7 @@ class User(db.Model):
     nome = db.Column(db.String(40), unique=True, nullable=False)
     sobrenome = db.Column(db.String(40), nullable=False)
     cpf = db.Column(db.String(14), unique=True, nullable=False)
-    login = db.relationship('Login', backref='author', lazy=True)
+    login = db.relationship('Login', backref='author', lazy=True, uselist=False)
     dependente = db.relationship('Dependente', backref='parente')
     telefone = db.relationship('Telefone', backref='telefone')
     medicamento = db.relationship('Medicamento', backref='medicamento')
@@ -34,6 +34,13 @@ class User(db.Model):
 
     def __repr__(self):
         return f"User('{self.nome}', '{self.sobrenome}','{self.cpf}')"
+
+class Endereco(db.Model):
+    __tablename__= 'endereco'
+    id = db.Column(db.Integer, primary_key=True)
+    rua = db.Column(db.String(40), nullable=False)
+    cidade = db.Column(db.String(20), nullable=False)
+    cep = db.Column(db.String(20), nullable=False)
 
 
 class Telefone(db.Model):
