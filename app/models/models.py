@@ -1,3 +1,4 @@
+from enum import unique
 from app import db
 
 
@@ -6,7 +7,7 @@ class Login(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(40), unique=True, nullable=False)
     senha = db.Column(db.String(60), unique=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
 
     def __repr__(self):
         return f"Login('{self.email}')"
@@ -50,6 +51,15 @@ class Telefone(db.Model):
         return f"Telefone('{self.ddd}', '{self.numero}')"
 
 
+# ---------------Mapear Many-to-Many---------
+depMed = db.Table('depMed',
+                  db.Column('depentende_id', db.Integer,
+                            db.ForeignKey('dependente.id')),
+                  db.Column('medicamento_id', db.Integer,
+                            db.ForeignKey('medicamento.id'))
+                  )
+
+
 class Medicamento(db.Model):
     __tablename__ = 'medicamento'
     id = db.Column(db.Integer, primary_key=True)
@@ -84,12 +94,3 @@ class Dependente(db.Model):
 
     def __repr__(self):
         return f"Dependente('{self.nome}')"
-
-
-# ---------------Mapear Many-to-Many---------
-depMed = db.Table('depMed',
-                  db.Column('depentende_id', db.Integer,
-                            db.ForeingKey('dependente.id')),
-                  db.Column('medicamento_id', db.Integer,
-                            db.ForeingKey('medicamento.id'))
-                  )
