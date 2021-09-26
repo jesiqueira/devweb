@@ -1,4 +1,3 @@
-from enum import unique
 from app import db
 
 
@@ -7,7 +6,8 @@ class Login(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(40), unique=True, nullable=False)
     senha = db.Column(db.String(60), unique=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=True)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        'user.id'), nullable=False, unique=True)
 
     def __repr__(self):
         return f"Login('{self.email}')"
@@ -21,10 +21,12 @@ class User(db.Model):
     nome = db.Column(db.String(40), unique=True, nullable=False)
     sobrenome = db.Column(db.String(40), nullable=False)
     cpf = db.Column(db.String(14), unique=True, nullable=False)
-    login = db.relationship('Login', backref='author', lazy=True, uselist=False)
+    login = db.relationship('Login', backref='author',
+                            lazy=True, uselist=False)
     dependente = db.relationship('Dependente', backref='parente')
     telefone = db.relationship('Telefone', backref='telefone')
     medicamento = db.relationship('Medicamento', backref='medicamento')
+    endereco = db.relationship('Endereco', backref='endereco', lazy=True)
 
     def __init__(self, nome, sobrenome, cpf, login):
         self.nome = nome
@@ -35,12 +37,24 @@ class User(db.Model):
     def __repr__(self):
         return f"User('{self.nome}', '{self.sobrenome}','{self.cpf}')"
 
+
 class Endereco(db.Model):
-    __tablename__= 'endereco'
+    __tablename__ = 'endereco'
     id = db.Column(db.Integer, primary_key=True)
     rua = db.Column(db.String(40), nullable=False)
     cidade = db.Column(db.String(20), nullable=False)
-    cep = db.Column(db.String(20), nullable=False)
+    cep = db.Column(db.String(9), nullable=False)
+    bairro = db.Column(db.String(40), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+
+    def __init__(self, rua, cidade, cep, bairro):
+        self.rua = rua
+        self.cidade = cidade
+        self.cep = cep
+        self.bairro = bairro
+
+    def __repr__(self):
+        return f"Endereco('{self.rua}', '{self.cidade}', '{self.cep}', '{self.bairro}')"
 
 
 class Telefone(db.Model):
@@ -101,3 +115,10 @@ class Dependente(db.Model):
 
     def __repr__(self):
         return f"Dependente('{self.nome}')"
+
+class Doenca(db.Model):
+    __tablename__ = 'doenca'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(40), nullable=False)
+    sintoma = db.Column(db.String(400), nullable=False)
+    
