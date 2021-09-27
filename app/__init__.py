@@ -22,8 +22,9 @@ def create_app(config_class=Config):
     manager.add_command('db', MigrateCommand)
 
     # Rotas
-    from app import rotas
+    from app.rotas import rota
 
     # Registrar Blueprint
+    app.register_blueprint(rota)
 
     return manager

@@ -1,7 +1,10 @@
-from flask import render_template, flash, redirect, url_for
-from app import app, db, bcrypt
+from flask import render_template, flash, redirect, url_for, Blueprint
+from app import db, bcrypt
 from app.controllers.forms import ContatoForm, LoginForm, RegistroForm
 from app.models.models import User, Login
+
+
+rota = Blueprint('rota', __name__)
 
 dados_cv = [
     {
@@ -31,19 +34,19 @@ dados_cv = [
 ]
 
 
-@app.route('/')
-@app.route('/home')
+@rota.route('/')
+@rota.route('/home')
 def home():
     return render_template('home.html', title='Home')
 
 
-@app.route('/about')
+@rota.route('/about')
 def about():
     info_cv = dados_cv
     return render_template('about.html', title='Sobre', info_cv=info_cv)
 
 
-@app.route('/contato', methods=['GET', 'POST'])
+@rota.route('/contato', methods=['GET', 'POST'])
 def contato():
     form = ContatoForm()
 
@@ -53,7 +56,7 @@ def contato():
     return render_template('contato.html', title='Contato', form=form)
 
 
-@app.route('/cadastro', methods=['GET', 'POST'])
+@rota.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
     form = RegistroForm()
 
@@ -64,7 +67,7 @@ def cadastro():
     return render_template('cadastro.html', title='Cadastro', form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@rota.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     return render_template('login.html', title='Login', form=form)
