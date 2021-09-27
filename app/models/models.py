@@ -1,3 +1,4 @@
+from sqlalchemy.orm import backref
 from app import db
 
 
@@ -80,6 +81,13 @@ depMed = db.Table('depMed',
                             db.ForeignKey('medicamento.id'))
                   )
 
+medDoenca = db.Table('medDoenca',
+                     db.Column('medicamento_id', db.Integer,
+                               db.ForeignKey('medicamento.id')),
+                     db.Column('doenca_id', db.Integer,
+                               db.ForeignKey('doenca.id'))
+                     )
+
 
 class Medicamento(db.Model):
     __tablename__ = 'medicamento'
@@ -116,9 +124,20 @@ class Dependente(db.Model):
     def __repr__(self):
         return f"Dependente('{self.nome}')"
 
+
 class Doenca(db.Model):
     __tablename__ = 'doenca'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(40), nullable=False)
     sintoma = db.Column(db.String(400), nullable=False)
-    
+
+    # ----Referencia para mapeamento Many to Many-----------
+    doencaMedcamento = db.relationship(
+        'medicamento', secondary=medDoenca, backref=db.backref('doencaMedicamento', lazy='dynamic'))
+
+    def __init__(self, nome, sintoma):
+        self.nome = nome
+        self.sintoma = sintoma
+
+    def __repr__(self):
+        return f"Doenca('{self.nome}', '{self.sintoma}')"

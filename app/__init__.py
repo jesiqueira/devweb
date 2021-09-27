@@ -1,12 +1,29 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
+from config import Config
 from flask_bcrypt import Bcrypt
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '709bb33e1d3b513e4a9ee78a2a940063'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
-db = SQLAlchemy(app)
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+migrate = Migrate()
 
-bcrypt = Bcrypt(app)
 
-from app import rotas
+def create_app(config_class=Config):
+
+    app = Flask(__name__)
+    app.config.from_object(Config)
+
+    db.init_app(app)
+    bcrypt.init_app(app)
+    migrate.init_app(app, db)
+    manager = Manager(app)
+    manager.add_command('db', MigrateCommand)
+
+    # Rotas
+    from app import rotas
+
+    # Registrar Blueprint
+
+    return manager
