@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, BooleanField, PasswordField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.fields.html5 import EmailField
+from app.models.models import User, Login
 
 
 class ContatoForm(FlaskForm):
@@ -32,3 +33,24 @@ class RegistroForm(FlaskForm):
                                   DataRequired(), EqualTo('password')])
 
     submit = SubmitField('Registrar me')
+
+    def validate_username(self, username):
+
+        user = User.query.filter_by(nome=username.data).first()
+        if user:
+            raise ValidationError(
+                'Já existe esse usuário em nosso Banco de Dados, cadastre um usuário diferente.')
+
+    def validate_cpf(self, cpf):
+
+        cpf = User.query.filter_by(cpf=cpf.data).first()
+        if cpf:
+            raise ValidationError(
+                'Já existe esse cpf em nosso Banco de Dados, cadastre um cpf diferente.')
+
+    def validate_email(self, email):
+
+        email = Login.query.filter_by(email=email.data).first()
+        if email:
+            raise ValidationError(
+                'Já existe esse e-mail em nosso Banco de Dados, cadastre um e-mail diferente.')

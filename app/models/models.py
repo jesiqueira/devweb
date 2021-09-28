@@ -1,8 +1,14 @@
 from sqlalchemy.orm import backref
-from app import db
+from app import db, login_manager
+from flask_login import UserMixin
 
 
-class Login(db.Model):
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+class Login(db.Model, UserMixin):
     __tablename__ = 'login'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(40), unique=True, nullable=False)
