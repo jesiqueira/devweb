@@ -62,8 +62,14 @@ def cadastro():
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        print('tudo certo')
-        return redirect(url_for('home'))
+        user = User(nome=form.username.data, cpf=form.cpf.data)
+        db.session.add(user)
+        db.session.commit()
+        login = Login(email=form.email.data, senha=hashed_password, user_id=user.id)
+        db.session.add(login)
+        db.session.commit()
+        flash('Cadastro Criado com sucesso! agora você pode logar!', 'success')
+        return redirect(url_for('rota.login'))
     return render_template('cadastro.html', title='Cadastro', form=form)
 
 

@@ -10,6 +10,11 @@ class Login(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey(
         'user.id'), nullable=False, unique=True)
 
+    def __init__(self, email, senha, user_id):
+        self.email = email
+        self.senha = senha
+        self.user_id = user_id
+
     def __repr__(self):
         return f"Login('{self.email}')"
 
@@ -20,7 +25,6 @@ class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(40), unique=True, nullable=False)
-    sobrenome = db.Column(db.String(40), nullable=False)
     cpf = db.Column(db.String(14), unique=True, nullable=False)
     login = db.relationship('Login', backref='author',
                             lazy=True, uselist=False)
@@ -29,14 +33,12 @@ class User(db.Model):
     medicamento = db.relationship('Medicamento', backref='medicamento')
     endereco = db.relationship('Endereco', backref='endereco', lazy=True)
 
-    def __init__(self, nome, sobrenome, cpf, login):
+    def __init__(self, nome, cpf):
         self.nome = nome
-        self.sobrenome = sobrenome
         self.cpf = cpf
-        self.login = login
 
     def __repr__(self):
-        return f"User('{self.nome}', '{self.sobrenome}','{self.cpf}')"
+        return f"User('{self.nome}', '{self.cpf}')"
 
 
 class Endereco(db.Model):
@@ -76,16 +78,16 @@ class Telefone(db.Model):
 # ---------------Mapear Many-to-Many---------
 depMed = db.Table('depMed',
                   db.Column('depentende_id', db.Integer,
-                            db.ForeignKey('dependente.id')),
+                            db.ForeignKey('dependente.id'), primary_key=True),
                   db.Column('medicamento_id', db.Integer,
-                            db.ForeignKey('medicamento.id'))
+                            db.ForeignKey('medicamento.id'), primary_key=True)
                   )
 
 medDoenca = db.Table('medDoenca',
                      db.Column('medicamento_id', db.Integer,
-                               db.ForeignKey('medicamento.id')),
+                               db.ForeignKey('medicamento.id'), primary_key=True),
                      db.Column('doenca_id', db.Integer,
-                               db.ForeignKey('doenca.id'))
+                               db.ForeignKey('doenca.id'), primary_key=True)
                      )
 
 
@@ -115,11 +117,12 @@ class Dependente(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     # ----Referencia para mapeamento Many to Many-----------
-    medicamentoDescription = db.relationship(
-        'medicamento', secondary=depMed, backref=db.backref('medicamentoDescript', lazy='dynamic'))
+    medicamentoDescript = db.relationship(
+        'Medicamento', secondary=depMed, lazy='dynamic', backref=db.backref('medicamentoDescript', lazy=True))
 
-    def __init__(self, nome):
+    def __init__(self, nome, user_id):
         self.nome = nome
+        self.user_id = user_id
 
     def __repr__(self):
         return f"Dependente('{self.nome}')"
@@ -133,7 +136,7 @@ class Doenca(db.Model):
 
     # ----Referencia para mapeamento Many to Many-----------
     doencaMedcamento = db.relationship(
-        'medicamento', secondary=medDoenca, backref=db.backref('doencaMedicamento', lazy='dynamic'))
+        'Medicamento', secondary=medDoenca, backref=db.backref('doencaMedicamento', lazy='dynamic'))
 
     def __init__(self, nome, sintoma):
         self.nome = nome
