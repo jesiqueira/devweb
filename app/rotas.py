@@ -1,8 +1,8 @@
-from flask import render_template, flash, redirect, url_for, Blueprint
+from flask import render_template, flash, redirect, url_for, Blueprint, request
 from app import db, bcrypt
 from app.controllers.forms import ContatoForm, LoginForm, RegistroForm
 from app.models.models import User, Login
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 rota = Blueprint('rota', __name__)
@@ -90,7 +90,8 @@ def login():
 
         if login and bcrypt.check_password_hash(login.senha, form.password.data):
             login_user(login, remember=form.remember.data)
-            return redirect(url_for('rota.home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('rota.home'))
         else:
             flash(
                 "Login não teve sucesso. Por favor verifique o e-mail e a senha.", 'danger')
@@ -101,3 +102,9 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('rota.home'))
+
+@rota.route('/account')
+@login_required
+def account():
+    user = User.query.filter_by(id=current_user.id).first()
+    return render_template('account.html', title='Account', user=user)
