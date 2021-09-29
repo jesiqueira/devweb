@@ -2,6 +2,7 @@ from flask import render_template, flash, redirect, url_for, Blueprint
 from app import db, bcrypt
 from app.controllers.forms import ContatoForm, LoginForm, RegistroForm
 from app.models.models import User, Login
+from flask_login import login_user, current_user, logout_user
 
 
 rota = Blueprint('rota', __name__)
@@ -58,14 +59,18 @@ def contato():
 
 @rota.route('/cadastro', methods=['GET', 'POST'])
 def cadastro():
+    if current_user.is_authenticated:
+        return redirect(url_for('rota.home'))
     form = RegistroForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
         user = User(nome=form.username.data, cpf=form.cpf.data)
         db.session.add(user)
         db.session.commit()
-        login = Login(email=form.email.data, senha=hashed_password, user_id=user.id)
+        login = Login(email=form.email.data,
+                      senha=hashed_password, user_id=user.id)
         db.session.add(login)
         db.session.commit()
         flash('Cadastro Criado com sucesso! agora você pode logar!', 'success')
@@ -75,5 +80,24 @@ def cadastro():
 
 @rota.route('/login', methods=['GET', 'POST'])
 def login():
+
+    if current_user.is_authenticated:
+        # print(current_user.id)
+        return redirect(url_for('rota.home'))
     form = LoginForm()
+    if form.validate_on_submit():
+        login = Login.query.filter_by(email=form.email.data).first()
+
+        if login and bcrypt.check_password_hash(login.senha, form.password.data):
+            login_user(login, remember=form.remember.data)
+            return redirect(url_for('rota.home'))
+        else:
+            flash(
+                "Login não teve sucesso. Por favor verifique o e-mail e a senha.", 'danger')
     return render_template('login.html', title='Login', form=form)
+
+
+@rota.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('rota.home'))

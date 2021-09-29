@@ -43,7 +43,11 @@
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a href="about" class="nav-link">Sobre</a></li>
                             <li class="nav-item"><a href="contato" class="nav-link">Contato</a></li>
-                            <li class="nav-item"><a href="login" class="nav-link">Login</a></li>
+                            {% if current_user.is_authenticated %}
+                                <li class="nav-item"><a href="{{url_for('rota.logout')}}" class="nav-link">Logout</a></li>
+                            {% else %}
+                                <li class="nav-item"><a href="{{url_for('rota.login')}}" class="nav-link">Login</a></li>
+                            {% endif %}
                         </ul>
                     </div>
                 </nav>
