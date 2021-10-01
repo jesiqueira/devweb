@@ -1,7 +1,19 @@
 {%extends 'layout.html' %}
 
 {% block content%}
-    <h1>ID: {{ current_user.id }}</h1>
-    <h1>Nome: {{ user.nome}}</h1>
-    <h1>E-mail: {{ current_user.email }}</h1>
+<div class="container-fluid">
+
+    <div class="content-section">
+        <div class="media">
+            <img src="{{url_for('static', filename='img/anonimo.jpeg')}}" alt="" class="rounded-circle account-img">
+            <div class="media-body">
+                <h1>ID: {{ current_user.id }}</h1>
+                <h1>Nome: {{ user.nome}}</h1>
+                <h1>E-mail: {{ current_user.email }}</h1>
+            </div>
+        </div>
+    </div>
+
+
+</div>
 {% endblock %}
