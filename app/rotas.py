@@ -103,8 +103,12 @@ def logout():
     logout_user()
     return redirect(url_for('rota.home'))
 
+
 @rota.route('/account')
 @login_required
 def account():
+    formRegistro = RegistroForm()
     user = User.query.filter_by(id=current_user.id).first()
-    return render_template('account.html', title='Account', user=user)
+    formRegistro.username.data = user.nome
+    formRegistro.cpf.data = user.cpf
+    return render_template('account.html', title='Account', user=user, formRegistro=formRegistro)

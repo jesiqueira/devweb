@@ -2,3 +2,5 @@
 config.py
 migrations
 __pycache__
+*.pyc
+node_modules

@@ -3,17 +3,95 @@
 {% block content%}
 <div class="container-fluid">
 
-    <div class="content-section">
-        <div class="media">
-            <img src="{{url_for('static', filename='img/anonimo.jpeg')}}" alt="" class="rounded-circle account-img">
-            <div class="media-body">
-                <h1>ID: {{ current_user.id }}</h1>
-                <h1>Nome: {{ user.nome}}</h1>
-                <h1>E-mail: {{ current_user.email }}</h1>
-            </div>
+    <div class="row">
+        <div class="col-4">
+            <img src="{{url_for('static', filename='img/anonimo.jpeg')}}" alt=""
+                class="rounded-circle account-img img-fluid">
+        </div>
+        <div class="text-center col-8">
+            <!-- <h1 >ID: {{ current_user.id }}</h1> -->
+            <h1 class="display-1 text-danger">Olá!</h1>
+            <h1 class="display-4">{{ user.nome}}</h1>
+            <!-- <h1>E-mail: {{ current_user.email }}</h1> -->
         </div>
     </div>
 
+    <div class="row pt-2">
+        <div class="col-12">
+            <div class="p-2 bg-light border rounded-3">
+                <div class="row">
+                    <div class="col-12 py-2 text-center"">
+                        <h1 class=" fs-1">Aqui vocês pode acessar seus dados e dados dos medicamentos</h1>
+                        <hr>
+                    </div>
+                </div>
+                <!--  jumbotron -->
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <ul class="nav nav-pills mb-3 justify-content-center"" id=" pills-tab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="pills-dados-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-dados" type="button" role="tab" aria-controls="pills-dados"
+                                    aria-selected="true">Meus dados</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-medicamento-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-medicamento" type="button" role="tab"
+                                    aria-controls="pills-medicamento" aria-selected="false">Meus Medicamentos</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="pills-med-vencido-tab" data-bs-toggle="pill"
+                                    data-bs-target="#pills-med-vencido" type="button" role="tab"
+                                    aria-controls="pills-med-vencido" aria-selected="false">Medicamentos
+                                    vencidos</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-dados" role="tabpanel"
+                                aria-labelledby="pills-dados-tab">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        {{formRegistro.username.label(class='form-label')}}
+                                        {{formRegistro.username(class='form-control', disabled=true)}}
+                                    </div>
+                                    <div class="col-sm-6">
+                                        {{formRegistro.cpf.label(class='form-label')}}
+                                        {{formRegistro.cpf(class='form-control', disabled=true)}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-medicamento" role="tabpanel"
+                                aria-labelledby="pills-medicamento-tab">
+                                <div class="row">
+                                    <div class="col-12">
+                                        ...02 dados do medicamentos
+                                    </div>
+                                    <div class="col-12">
+                                        <ul class="nav justify-content-center">
+                                            <li class="nav-item">
+                                                <a href="#" class="nav-link btn btn-outline-primary" role="button"><i class="fas fa-pen me-3"></i>Cadastrar</a>
+                                            </li>
+                                            <!-- <li class="nav-item m-3">
+                                                <a href="#" class="nav-link btn btn-outline-secondary" role="button">Editar</a>
+                                            </li>
+                                            <li class="nav-item m-3">
+                                                <a href="#" class="nav-link btn btn-outline-danger" role="button">Deletar</a>
+                                            </li> -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-med-vencido" role="tabpanel"
+                                aria-labelledby="pills-med-vencido-tab">
+                                ...03 dados do medicamentos vencidos
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 {% endblock %}
