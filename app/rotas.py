@@ -1,7 +1,8 @@
 from flask import render_template, flash, redirect, url_for, Blueprint, request
+from flask.globals import session
 from app import db, bcrypt
-from app.controllers.forms import ContatoForm, LoginForm, RegistroForm
-from app.models.models import User, Login
+from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser
+from app.models.models import Endereco, Telefone, User, Login
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -107,8 +108,17 @@ def logout():
 @rota.route('/account')
 @login_required
 def account():
-    formRegistro = RegistroForm()
-    user = User.query.filter_by(id=current_user.id).first()
-    formRegistro.username.data = user.nome
-    formRegistro.cpf.data = user.cpf
-    return render_template('account.html', title='Account', user=user, formRegistro=formRegistro)
+    formUser = DadosUser()
+    # user = User.query.filter_by(id=current_user.id).first()
+    user = db.session.query(User.nome, User.cpf, Login.email).join(
+        Login, Login.user_id == User.id).filter(User.id == current_user.id).first()
+
+    endereco = Endereco.query.filter_by(Endereco, Endereco.user_id == current_user.id).first()
+    
+    
+    print(f'User: {user}')
+    formUser.username.data = user.nome
+    formUser.cpf.data = user.cpf
+    formUser.email.data = user.email
+    formUser.rua.data = endereco.rua
+    return render_template('account.html', title='Account', user=user, formUser=formUser)

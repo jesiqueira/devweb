@@ -54,3 +54,13 @@ class RegistroForm(FlaskForm):
         if email:
             raise ValidationError(
                 'Já existe esse e-mail em nosso Banco de Dados, cadastre um e-mail diferente.')
+
+
+class DadosUser(FlaskForm):
+    username = StringField('Nome de Usuário')
+    cpf = StringField('CPF')
+    email = StringField('E-mail')
+    rua = StringField('Rua')
+    cidade = StringField('Cidade')
+    cep = StringField('Cep')
+    bairro = StringField('Bairro')
