@@ -32,6 +32,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(40), unique=True, nullable=False)
     cpf = db.Column(db.String(14), unique=True, nullable=False)
+    imagem = db.Column(db.String(60), nullable=False, default='default.jpeg')
     login = db.relationship('Login', backref='author',
                             lazy=True, uselist=False)
     dependente = db.relationship('Dependente', backref='parente')
