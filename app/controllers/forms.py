@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import EmailField, DateField
 from app.models.models import User, Login
 
 
@@ -64,3 +64,14 @@ class DadosUser(FlaskForm):
     cidade = StringField('Cidade')
     cep = StringField('Cep')
     bairro = StringField('Bairro')
+
+
+class Medicamento(FlaskForm):
+    nome = StringField('Nome', validators=[
+                       DataRequired(), Length(min=5, max=40)])
+    dataValidade = DateField('Data Validade', validators=[DataRequired()])
+    principioAtivo = TextAreaField(
+        'Principio Ativo', validators=[DataRequired()])
+    posologia = TextAreaField('Posologia', validators=[DataRequired()])
+
+    submit = SubmitField('Cadastrar')

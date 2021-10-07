@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, url_for, Blueprint, request
 from flask.globals import session
 from app import db, bcrypt
-from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser
+from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser, Medicamento
 from app.models.models import Endereco, Telefone, User, Login
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -125,7 +125,8 @@ def account():
     return render_template('account.html', title='Account', user=user, formRegistro=formUser)
 
 
-@rota.route('/medicamento')
+@rota.route('/medicamento/new', methods=['GET', 'POST'])
 @login_required
 def medicamento():
-    return render_template('medicamento.html', title='Medicamento')
+    medicamentoForm = Medicamento()
+    return render_template('medicamento.html', title='Medicamento', legenda='Cadastro de Medicamento', form=medicamentoForm)
