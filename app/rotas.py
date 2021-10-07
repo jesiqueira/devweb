@@ -109,16 +109,23 @@ def logout():
 @login_required
 def account():
     formUser = DadosUser()
-    # user = User.query.filter_by(id=current_user.id).first()
-    user = db.session.query(User.nome, User.cpf, Login.email).join(
-        Login, Login.user_id == User.id).filter(User.id == current_user.id).first()
+    # isouter=True irá reproduzir umas consulta Left Join
+    user = db.session.query(User.nome, User.cpf, Login.email, Endereco.rua, Endereco.cidade,  Endereco.cep,  Endereco.bairro).join(
+        Login, Login.user_id == User.id).join(Endereco, Endereco.user_id == User.id, isouter=True).filter(User.id == current_user.id).first()
 
-    endereco = Endereco.query.filter_by(Endereco, Endereco.user_id == current_user.id).first()
-    
-    
     print(f'User: {user}')
     formUser.username.data = user.nome
     formUser.cpf.data = user.cpf
     formUser.email.data = user.email
-    formUser.rua.data = endereco.rua
-    return render_template('account.html', title='Account', user=user, formUser=formUser)
+    formUser.rua.data = user.rua
+    formUser.cidade.data = user.cidade
+    formUser.cep.data = user.cep
+    formUser.bairro.data = user.bairro
+
+    return render_template('account.html', title='Account', user=user, formRegistro=formUser)
+
+
+@rota.route('/medicamento')
+@login_required
+def medicamento():
+    return render_template('medicamento.html', title='Medicamento')
