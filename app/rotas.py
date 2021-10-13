@@ -112,8 +112,10 @@ def account():
     # isouter=True irá reproduzir umas consulta Left Join
     user = db.session.query(User.nome, User.cpf, Login.email, Endereco.rua, Endereco.cidade,  Endereco.cep,  Endereco.bairro).join(
         Login, Login.user_id == User.id).join(Endereco, Endereco.user_id == User.id, isouter=True).filter(User.id == current_user.id).first()
+    
+    medicamentos = Medicamento.query.filter_by(user_id=current_user.id).all()
 
-    print(f'User: {user}')
+    # print(f'User: {medicamentos}')
     formUser.username.data = user.nome
     formUser.cpf.data = user.cpf
     formUser.email.data = user.email
@@ -122,7 +124,7 @@ def account():
     formUser.cep.data = user.cep
     formUser.bairro.data = user.bairro
 
-    return render_template('account.html', title='Account', user=user, formRegistro=formUser)
+    return render_template('account.html', title='Account', user=user, formRegistro=formUser, medicamentos=medicamentos)
 
 
 @rota.route('/medicamento/new', methods=['GET', 'POST'])
@@ -130,7 +132,6 @@ def account():
 def medicamento():
     form = MedicamentoForm()
     if form.validate_on_submit():
-        print(form.posologia.data)
         medicamento = Medicamento(nome=form.nome.data, data_validade=form.dataValidade.data,
                                   principio_ativo=form.principioAtivo.data, posologia=form.posologia.data, user_id=current_user.id)
         db.session.add(medicamento)
