@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, Blueprint, request
 from flask.globals import session
 from app import db, bcrypt
-from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser, Medicamento
-from app.models.models import Endereco, Telefone, User, Login
+from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser, MedicamentoForm
+from app.models.models import Endereco, Medicamento, Telefone, User, Login
 from flask_login import login_user, current_user, logout_user, login_required
 
 
@@ -128,5 +128,15 @@ def account():
 @rota.route('/medicamento/new', methods=['GET', 'POST'])
 @login_required
 def medicamento():
-    medicamentoForm = Medicamento()
-    return render_template('medicamento.html', title='Medicamento', legenda='Cadastro de Medicamento', form=medicamentoForm)
+    form = MedicamentoForm()
+    if form.validate_on_submit():
+        print(form.posologia.data)
+        medicamento = Medicamento(nome=form.nome.data, data_validade=form.dataValidade.data,
+                                  principio_ativo=form.principioAtivo.data, posologia=form.posologia.data, user_id=current_user.id)
+        db.session.add(medicamento)
+        db.session.commit()
+
+        flash('Medicamento cadastrado com sucesso..', 'success')
+        return redirect(url_for('rota.account'))
+
+    return render_template('medicamento.html', title='Medicamento', legenda='Cadastro de Medicamento', form=form)

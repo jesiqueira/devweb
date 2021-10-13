@@ -66,12 +66,11 @@ class DadosUser(FlaskForm):
     bairro = StringField('Bairro')
 
 
-class Medicamento(FlaskForm):
-    nome = StringField('Nome', validators=[
-                       DataRequired(), Length(min=5, max=40)])
+class MedicamentoForm(FlaskForm):
+    nome = StringField('Medicamento', validators=[DataRequired(), Length(min=5, max=40)])
     dataValidade = DateField('Data Validade', validators=[DataRequired()])
     principioAtivo = TextAreaField(
-        'Principio Ativo', validators=[DataRequired()])
-    posologia = TextAreaField('Posologia', validators=[DataRequired()])
+        'Principio Ativo', validators=[DataRequired(), Length(min=20, max=400)])
+    posologia = TextAreaField('Posologia', validators=[DataRequired(), Length(min=20, max=400)])
 
     submit = SubmitField('Cadastrar')

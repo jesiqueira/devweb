@@ -105,13 +105,14 @@ class Medicamento(db.Model):
     data_validade = db.Column(db.DateTime, nullable=False)
     principio_ativo = db.Column(db.String(300), nullable=False)
     posologia = db.Column(db.String(300), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, nome, data_validade, principio_ativo, posologia):
+    def __init__(self, nome, data_validade, principio_ativo, posologia, user_id):
         self.nome = nome
         self.data_validade = data_validade
         self.principio_ativo = principio_ativo
         self.posologia = posologia
+        self.user_id = user_id
 
     def __repr__(self):
         return f"Medicamento('{self.nome}', '{self.data_validade}','{self.principio_ativo}', '{self.posologia}'"
