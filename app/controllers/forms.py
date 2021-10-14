@@ -73,4 +73,4 @@ class MedicamentoForm(FlaskForm):
         'Principio Ativo', validators=[DataRequired(), Length(min=20, max=400)])
     posologia = TextAreaField('Posologia', validators=[DataRequired(), Length(min=20, max=400)])
 
-    submit = SubmitField('Cadastrar')
+    submit = SubmitField('Salvar')

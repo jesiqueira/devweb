@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, Blueprint, request
+from flask import render_template, flash, redirect, url_for, Blueprint, request, abort
 from flask.globals import session
 from app import db, bcrypt
 from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser, MedicamentoForm
@@ -112,7 +112,7 @@ def account():
     # isouter=True irá reproduzir umas consulta Left Join
     user = db.session.query(User.nome, User.cpf, Login.email, Endereco.rua, Endereco.cidade,  Endereco.cep,  Endereco.bairro).join(
         Login, Login.user_id == User.id).join(Endereco, Endereco.user_id == User.id, isouter=True).filter(User.id == current_user.id).first()
-    
+
     medicamentos = Medicamento.query.filter_by(user_id=current_user.id).all()
 
     # print(f'User: {medicamentos}')
@@ -141,3 +141,28 @@ def medicamento():
         return redirect(url_for('rota.account'))
 
     return render_template('medicamento.html', title='Medicamento', legenda='Cadastro de Medicamento', form=form)
+
+
+@rota.route('/medicamento/<int:medicamento_id>/update',  methods=['GET', 'POST'])
+@login_required
+def update_medicamento(medicamento_id):
+    medicamento = Medicamento.query.get_or_404(medicamento_id)
+
+    if medicamento.user_id != current_user.id:
+        about(403)
+
+    form = MedicamentoForm()
+    if form.validate_on_submit():
+        medicamento.nome = form.nome.data
+        medicamento.data_validade = form.dataValidade.data
+        medicamento.principio_ativo = form.principioAtivo.data
+        medicamento.posologia = form.posologia.data
+        db.session.commit()
+        flash("Medicamento Atualizado com sucesso", 'success')
+        return redirect(url_for('rota.account'))
+    elif request.method == 'GET':
+        form.nome.data = medicamento.nome
+        form.dataValidade.data = medicamento.data_validade
+        form.principioAtivo.data = medicamento.principio_ativo
+        form.posologia.data = medicamento.posologia
+        return render_template('medicamento.html', title='Medicamento', legenda='Update de Medicamento', form=form)
