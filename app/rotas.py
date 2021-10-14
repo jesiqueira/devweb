@@ -158,7 +158,7 @@ def update_medicamento(medicamento_id):
         medicamento.principio_ativo = form.principioAtivo.data
         medicamento.posologia = form.posologia.data
         db.session.commit()
-        flash("Medicamento Atualizado com sucesso", 'success')
+        flash("Medicamento Atualizado com sucesso!", 'success')
         return redirect(url_for('rota.account'))
     elif request.method == 'GET':
         form.nome.data = medicamento.nome
@@ -166,3 +166,16 @@ def update_medicamento(medicamento_id):
         form.principioAtivo.data = medicamento.principio_ativo
         form.posologia.data = medicamento.posologia
         return render_template('medicamento.html', title='Medicamento', legenda='Update de Medicamento', form=form)
+
+
+@rota.route('/medicamento/<int:medicamento_id>/delete',  methods=['POST'])
+@login_required
+def delete_medicamento(medicamento_id):
+    medicamento = Medicamento.query.get_or_404(medicamento_id)
+
+    if medicamento.user_id != current_user.id:
+        about(403)
+    db.session.delete(medicamento)
+    db.session.commit()
+    flash("Medicamento removido com sucesso!", 'success')
+    return redirect(url_for('rota.account'))
