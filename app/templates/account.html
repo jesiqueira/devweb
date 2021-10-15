@@ -30,12 +30,12 @@
                     <div class="col-12">
                         <ul class="nav nav-pills mb-3 justify-content-center"" id=" pills-tab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="pills-dados-tab" data-bs-toggle="pill"
+                                <button class="nav-link" id="pills-dados-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-dados" type="button" role="tab" aria-controls="pills-dados"
                                     aria-selected="true"><i class="fas fa-database me-2"></i>Meus dados</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="pills-medicamento-tab" data-bs-toggle="pill"
+                                <button class="nav-link active" id="pills-medicamento-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-medicamento" type="button" role="tab"
                                     aria-controls="pills-medicamento" aria-selected="false"><i class="fas fa-hand-holding-medical me-2"></i>Meus Medicamentos</button>
                             </li>
@@ -47,7 +47,7 @@
                             </li>
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-dados" role="tabpanel"
+                            <div class="tab-pane fade" id="pills-dados" role="tabpanel"
                                 aria-labelledby="pills-dados-tab">
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -97,7 +97,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-medicamento" role="tabpanel"
+                            <div class="tab-pane fade show active" id="pills-medicamento" role="tabpanel"
                                 aria-labelledby="pills-medicamento-tab">
                                 <div class="row">
                                     <div class="col-12">
@@ -112,7 +112,7 @@
                                                     <th scope="col">AÇÃO</th>
                                                 </thead>
                                                 <tbody>
-                                                    {%for medicamento in medicamentos%}
+                                                    {%for medicamento in medicamentos.items%}
                                                         <tr>
                                                             <th scope="row">{{medicamento.id}}</th>
                                                             <td>{{medicamento.nome}}</td>
@@ -129,6 +129,17 @@
                                                     {%endfor%}
                                                 </tbody>
                                             </table>
+                                            {%for page_num in medicamentos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}
+                                                {% if page_num %}
+                                                    {% if medicamentos.page == page_num %}
+                                                        <a class="btn btn-info mb-3" href="{{ url_for('rota.account', page=page_num) }}">{{page_num}}</a>
+                                                    {% else %}
+                                                        <a class="btn btn-outline-info mb-3" href="{{ url_for('rota.account', page=page_num) }}">{{page_num}}</a>
+                                                    {% endif %}
+                                                {% else %}
+                                                    ...
+                                                {% endif %}
+                                            {%endfor%}
                                         </div>
                                     </div>
                                     <div class="col-12">

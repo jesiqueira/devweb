@@ -108,12 +108,14 @@ def logout():
 @rota.route('/account')
 @login_required
 def account():
+    page = request.args.get('page', 1, type=int)
     formUser = DadosUser()
     # isouter=True irá reproduzir umas consulta Left Join
     user = db.session.query(User.nome, User.cpf, Login.email, Endereco.rua, Endereco.cidade,  Endereco.cep,  Endereco.bairro).join(
         Login, Login.user_id == User.id).join(Endereco, Endereco.user_id == User.id, isouter=True).filter(User.id == current_user.id).first()
 
-    medicamentos = Medicamento.query.filter_by(user_id=current_user.id).all()
+    # medicamentos = Medicamento.query.filter_by(user_id=current_user.id).all()
+    medicamentos = Medicamento.query.filter_by(user_id=current_user.id).paginate(page=page, per_page=2)
 
     # print(f'User: {medicamentos}')
     formUser.username.data = user.nome
@@ -156,7 +158,7 @@ def view_medicamento(medicamento_id):
     form.dataValidade.data = medicamento.data_validade
     form.principioAtivo.data = medicamento.principio_ativo
     form.posologia.data = medicamento.posologia
-    return render_template('medicamentoView.html', title='Medicamento', legenda='Visualiazar de Medicamento', form=form, id_medicamento=medicamento_id)
+    return render_template('medicamentoView.html', title='Medicamento', legenda='Visualiazar Medicamento', form=form, id_medicamento=medicamento_id)
 
 
 @rota.route('/medicamento/<int:medicamento_id>/update',  methods=['GET', 'POST'])
