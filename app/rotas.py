@@ -143,6 +143,22 @@ def medicamento():
     return render_template('medicamento.html', title='Medicamento', legenda='Cadastro de Medicamento', form=form)
 
 
+@rota.route('/medicamento/<int:medicamento_id>/view',  methods=['GET', 'POST'])
+@login_required
+def view_medicamento(medicamento_id):
+    medicamento = Medicamento.query.get_or_404(medicamento_id)
+
+    if medicamento.user_id != current_user.id:
+        about(403)
+
+    form = MedicamentoForm()
+    form.nome.data = medicamento.nome
+    form.dataValidade.data = medicamento.data_validade
+    form.principioAtivo.data = medicamento.principio_ativo
+    form.posologia.data = medicamento.posologia
+    return render_template('medicamentoView.html', title='Medicamento', legenda='Visualiazar de Medicamento', form=form, id_medicamento=medicamento_id)
+
+
 @rota.route('/medicamento/<int:medicamento_id>/update',  methods=['GET', 'POST'])
 @login_required
 def update_medicamento(medicamento_id):

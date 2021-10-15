@@ -109,7 +109,7 @@
                                                     <th scope="col">VALIDADE</th>
                                                     <th scope="col">PRINCIPIO ATIVO</th>
                                                     <th scope="col">POSOLOGIA</th>
-                                                    <th scope="col" colspan="2">AÇÃO</th>
+                                                    <th scope="col">AÇÃO</th>
                                                 </thead>
                                                 <tbody>
                                                     {%for medicamento in medicamentos%}
@@ -120,32 +120,15 @@
                                                             <td>{{medicamento.principio_ativo}}</td>
                                                             <td>{{medicamento.posologia}}</td>
                                                             <td>
-                                                                <a href="{{ url_for('rota.update_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">UPDATE</a>
+                                                                <a href="{{ url_for('rota.view_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">Visualizar</a>
                                                             </td>
-                                                            <td>
-                                                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal">DELETE</button>
-                                                            </td>
+                                                            <!-- <td>
+                                                                <button type="button" class="btn btn-danger btn-sm" >DELETE</button>
+                                                            </td> -->
                                                         </tr>
                                                     {%endfor%}
                                                 </tbody>
                                             </table>
-                                        </div>
-                                    </div>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                            <h5 class="modal-title" id="deleteModalLabel">Remover Medicamento</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <form action="{{ url_for('rota.delete_medicamento', medicamento_id=medicamento.id) }}" method="post">
-                                                <input type="submit" class="btn btn-danger" value="delete">
-                                            </form>
-                                            </div>
-                                        </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
