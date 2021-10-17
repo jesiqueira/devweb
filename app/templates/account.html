@@ -117,7 +117,7 @@
                                                             <th scope="row">{{medicamento.id}}</th>
                                                             <td>{{medicamento.nome}}</td>
                                                             <td>{{medicamento.data_validade.strftime('%d/%m/%Y')}}</td>
-                                                            <td>{{medicamento.principio_ativo}}</td>
+                                                            <td class="overflow-hidden">{{medicamento.principio_ativo}}</td>
                                                             <td>{{medicamento.posologia}}</td>
                                                             <td>
                                                                 <a href="{{ url_for('rota.view_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">Visualizar</a>

@@ -1,10 +1,11 @@
 from flask import render_template, flash, redirect, url_for, Blueprint, request, abort
 from flask.globals import session
-from app import db, bcrypt
-from app.controllers.forms import ContatoForm, LoginForm, RegistroForm, DadosUser, MedicamentoForm
+from app import db, bcrypt, mail
+from app.controllers.forms import (ContatoForm, LoginForm, RegistroForm, DadosUser,
+                                   MedicamentoForm, RequestResetForm, ResetPassowordForm)
 from app.models.models import Endereco, Medicamento, Telefone, User, Login
 from flask_login import login_user, current_user, logout_user, login_required
-
+from flask_mail import Message
 
 rota = Blueprint('rota', __name__)
 
@@ -115,7 +116,8 @@ def account():
         Login, Login.user_id == User.id).join(Endereco, Endereco.user_id == User.id, isouter=True).filter(User.id == current_user.id).first()
 
     # medicamentos = Medicamento.query.filter_by(user_id=current_user.id).all()
-    medicamentos = Medicamento.query.filter_by(user_id=current_user.id).paginate(page=page, per_page=2)
+    medicamentos = Medicamento.query.filter_by(
+        user_id=current_user.id).paginate(page=page, per_page=2)
 
     # print(f'User: {medicamentos}')
     formUser.username.data = user.nome
@@ -197,3 +199,49 @@ def delete_medicamento(medicamento_id):
     db.session.commit()
     flash("Medicamento removido com sucesso!", 'success')
     return redirect(url_for('rota.account'))
+
+
+def send_reset_email(login):
+    token = login.get_reset_token()
+    msg = Message('Requerido troca de senha',
+                  sender='noreply@demo.com', recipients=[login.email])
+    msg.body = f"""Para realizar o troca de senha, acesse o link: {url_for('rota.reset_token', token=token, _external=True)}
+    Se não foi você quem solicitou essa alteração pode ignorar e nada será modificado """
+    mail.send(msg)
+
+@rota.route('/reset_password', methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('rota.home'))
+
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        login = Login.query.filter_by(email=form.email.data).first()
+        send_reset_email(login)
+        flash("Um e-mail foi enviado com instruções para trocar a senha!", 'info')
+        return redirect(url_for('rota.login'))
+
+    return render_template('reset_request.html', title='Trocar Senha', form=form)
+
+
+@rota.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('rota.home'))
+
+    login = Login.verify_reset_token(token)
+
+    if login is None:
+        flash("O Token é inválido ou expirou!", 'warning')
+        return redirect(url_for(rota.reset_request))
+
+    form = ResetPassowordForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(
+            form.password.data).decode('utf-8')
+        login.password = hashed_password
+        db.session.commit()
+        flash('Senha atualizada com sucesso! agora você pode logar!', 'success')
+        return redirect(url_for('rota.login'))
+
+    return render_template('reset_token.html', title='Trocar Senha', form=form)

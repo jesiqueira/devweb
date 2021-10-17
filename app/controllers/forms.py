@@ -74,3 +74,19 @@ class MedicamentoForm(FlaskForm):
     posologia = TextAreaField('Posologia', validators=[DataRequired(), Length(min=20, max=400)])
 
     submit = SubmitField('Salvar')
+
+
+class RequestResetForm(FlaskForm):
+    email = EmailField('E-mail', validators=[DataRequired(), Email()])
+    submit = SubmitField('Solicitar Reset de Senha')
+
+    def validate_email(self, email):
+        email = Login.query.filter_by(email=email.data).first()
+        if email is None:
+            raise ValidationError('Não encontramos esse e-mail em nossa base, informe e-mail diferente ou Cadastra-se.')
+
+class ResetPassowordForm(FlaskForm):
+    password = PasswordField('Senha', validators=[DataRequired()])
+    password_conf = PasswordField('Confirme a Senha', validators=[
+                                  DataRequired(), EqualTo('password')])
+    submit = SubmitField('Troca a Senha')

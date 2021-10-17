@@ -1,0 +1,30 @@
+{%extends 'layout.html' %}
+
+{% block content%}
+<div class="container-fluid">
+
+    <main class="form-signin">
+        <form action="" method="POST">
+            {{ form.hidden_tag()}}
+            <h1 class="h3 mb-4 fw-normal">Trocar Senha</h1>
+
+            <div class="form-floating mb-3">
+                {% if form.email.errors %}
+                    {{ form.email(class='form-control is-invalid')}}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor%}
+                    </div>
+                {% else %}
+                    {{form.email(class='form-control', placeholder="email@email.com")}}
+                {% endif %}
+                {{form.email.label()}}
+            </div>
+            {{form.submit(class="w-100 btn btn-lg btn-primary mb-5")}}
+
+        </form>
+    </main>
+
+</div>
+{% endblock %}
