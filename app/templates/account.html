@@ -120,7 +120,7 @@
                                                             <td class="overflow-hidden">{{medicamento.principio_ativo}}</td>
                                                             <td>{{medicamento.posologia}}</td>
                                                             <td>
-                                                                <a href="{{ url_for('rota.view_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">Visualizar</a>
+                                                                <a href="{{ url_for('medicine.view_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">Visualizar</a>
                                                             </td>
                                                             <!-- <td>
                                                                 <button type="button" class="btn btn-danger btn-sm" >DELETE</button>
@@ -132,9 +132,9 @@
                                             {%for page_num in medicamentos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}
                                                 {% if page_num %}
                                                     {% if medicamentos.page == page_num %}
-                                                        <a class="btn btn-info mb-3" href="{{ url_for('rota.account', page=page_num) }}">{{page_num}}</a>
+                                                        <a class="btn btn-info mb-3" href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
                                                     {% else %}
-                                                        <a class="btn btn-outline-info mb-3" href="{{ url_for('rota.account', page=page_num) }}">{{page_num}}</a>
+                                                        <a class="btn btn-outline-info mb-3" href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
                                                     {% endif %}
                                                 {% else %}
                                                     ...
@@ -145,7 +145,7 @@
                                     <div class="col-12">
                                         <ul class="nav justify-content-center">
                                             <li class="nav-item">
-                                                <a href="{{url_for('rota.medicamento')}}" class="nav-link btn btn-outline-primary" role="button"><i class="fas fa-pen me-3"></i>Cadastrar</a>
+                                                <a href="{{url_for('medicine.medicamento')}}" class="nav-link btn btn-outline-primary" role="button"><i class="fas fa-pen me-3"></i>Cadastrar</a>
                                             </li>
                                             <!-- <li class="nav-item m-3">
                                                 <a href="#" class="nav-link btn btn-outline-secondary" role="button">Editar</a>

@@ -32,8 +32,12 @@ def create_app(config_class=Config):
 
     # Rotas
     from app.rotas import rota
+    from app.controllers.usuarios.rotas import users
+    from app.controllers.medicamento.rotas import medicine
 
     # Registrar Blueprint
     app.register_blueprint(rota)
+    app.register_blueprint(users)
+    app.register_blueprint(medicine)
 
     return manager
