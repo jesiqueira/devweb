@@ -29,7 +29,7 @@ class Login(db.Model, UserMixin):
             user_id = s.loads(token)['user_id']
         except:
             return None
-        return Login.query.get(user_id=user_id)
+        return Login.query.get(user_id)
 
     def __init__(self, email, senha, user_id):
         self.email = email

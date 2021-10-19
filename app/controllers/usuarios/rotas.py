@@ -35,7 +35,7 @@ def login():
 
     if current_user.is_authenticated:
         # print(current_user.id)
-        return redirect(url_for('users.home'))
+        return redirect(url_for('rota.home'))
     form = LoginForm()
     if form.validate_on_submit():
         login = Login.query.filter_by(email=form.email.data).first()
@@ -104,7 +104,7 @@ def reset_token(token):
 
     if login is None:
         flash("O Token é inválido ou expirou!", 'warning')
-        return redirect(url_for(users.reset_request))
+        return redirect(url_for('users.reset_request'))
 
     form = ResetPassowordForm()
     if form.validate_on_submit():

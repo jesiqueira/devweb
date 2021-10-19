@@ -17,7 +17,7 @@ def medicamento():
         db.session.commit()
 
         flash('Medicamento cadastrado com sucesso..', 'success')
-        return redirect(url_for('medicine.account'))
+        return redirect(url_for('users.account'))
 
     return render_template('medicamento.html', title='Medicamento', legenda='Cadastro de Medicamento', form=form)
 
@@ -54,7 +54,7 @@ def update_medicamento(medicamento_id):
         medicamento.posologia = form.posologia.data
         db.session.commit()
         flash("Medicamento Atualizado com sucesso!", 'success')
-        return redirect(url_for('medicine.account'))
+        return redirect(url_for('users.account'))
     elif request.method == 'GET':
         form.nome.data = medicamento.nome
         form.dataValidade.data = medicamento.data_validade
@@ -73,4 +73,4 @@ def delete_medicamento(medicamento_id):
     db.session.delete(medicamento)
     db.session.commit()
     flash("Medicamento removido com sucesso!", 'success')
-    return redirect(url_for('medicine.account'))
+    return redirect(url_for('users.account'))

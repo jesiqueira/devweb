@@ -1,10 +1,5 @@
-from flask import render_template, flash, redirect, url_for, Blueprint, request, abort
-# from flask.globals import session
-from app import db, bcrypt, mail
-from app.controllers.forms import (ContatoForm, LoginForm, RegistroForm, DadosUser,
-                                   MedicamentoForm, RequestResetForm, ResetPassowordForm)
-from app.models.models import Endereco, Medicamento, Telefone, User, Login
-from flask_login import login_user, current_user, logout_user, login_required
+from flask import render_template, flash, redirect, url_for, Blueprint
+from app.controllers.forms import ContatoForm
 
 
 rota = Blueprint('rota', __name__)
@@ -57,13 +52,3 @@ def contato():
         flash(f'Dados enviado com sucesso {form.username.data}!', 'success')
         return redirect(url_for('contato'))
     return render_template('contato.html', title='Contato', form=form)
-
-
-
-
-
-
-
-
-
-

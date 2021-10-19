@@ -12,7 +12,7 @@ mail = Mail()
 bcrypt = Bcrypt()
 migrate = Migrate()
 login_manager = LoginManager()
-login_manager.login_view = 'rota.login'
+login_manager.login_view = 'users.login'
 login_manager.login_message = 'Faça login para acessar essa página.'
 login_manager.login_message_category = 'info'
 
