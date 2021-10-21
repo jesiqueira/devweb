@@ -31,12 +31,14 @@ def create_app(config_class=Config):
     manager.add_command('db', MigrateCommand)
 
     # Rotas
-    from app.rotas import rota
+    from app.controllers.main.rotas import main
+    from app.controllers.errors.handles import errors
     from app.controllers.usuarios.rotas import users
     from app.controllers.medicamento.rotas import medicine
 
     # Registrar Blueprint
-    app.register_blueprint(rota)
+    app.register_blueprint(main)
+    app.register_blueprint(errors)
     app.register_blueprint(users)
     app.register_blueprint(medicine)
 

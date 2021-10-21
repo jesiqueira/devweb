@@ -1,8 +1,7 @@
 from flask import render_template, flash, redirect, url_for, Blueprint
 from app.controllers.forms import ContatoForm
 
-
-rota = Blueprint('rota', __name__)
+main = Blueprint('main', __name__)
 
 dados_cv = [
     {
@@ -32,19 +31,19 @@ dados_cv = [
 ]
 
 
-@rota.route('/')
-@rota.route('/home')
+@main.route('/')
+@main.route('/home')
 def home():
     return render_template('home.html', title='Home')
 
 
-@rota.route('/about')
+@main.route('/about')
 def about():
     info_cv = dados_cv
     return render_template('about.html', title='Sobre', info_cv=info_cv)
 
 
-@rota.route('/contato', methods=['GET', 'POST'])
+@main.route('/contato', methods=['GET', 'POST'])
 def contato():
     form = ContatoForm()
 

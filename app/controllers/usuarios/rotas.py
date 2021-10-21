@@ -1,6 +1,6 @@
-from flask import render_template, flash, redirect, url_for, Blueprint, request, abort
-from app.controllers.forms import (ContatoForm, LoginForm, RegistroForm, DadosUser,
-                                   MedicamentoForm, RequestResetForm, ResetPassowordForm)
+from flask import render_template, flash, redirect, url_for, Blueprint, request
+from app.controllers.forms import (LoginForm, RegistroForm, DadosUser,
+                                   RequestResetForm, ResetPassowordForm)
 from app.models.models import Endereco, Medicamento, User, Login
 from app import db, bcrypt
 from app.controllers.usuarios.utils import send_reset_email
@@ -34,8 +34,7 @@ def cadastro():
 def login():
 
     if current_user.is_authenticated:
-        # print(current_user.id)
-        return redirect(url_for('rota.home'))
+        return redirect(url_for('main.home'))
     form = LoginForm()
     if form.validate_on_submit():
         login = Login.query.filter_by(email=form.email.data).first()
@@ -43,7 +42,7 @@ def login():
         if login and bcrypt.check_password_hash(login.senha, form.password.data):
             login_user(login, remember=form.remember.data)
             next_page = request.args.get('next')
-            return redirect(next_page) if next_page else redirect(url_for('rota.home'))
+            return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             flash(
                 "Login não teve sucesso. Por favor verifique o e-mail e a senha.", 'danger')
@@ -53,7 +52,7 @@ def login():
 @users.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('rota.home'))
+    return redirect(url_for('main.home'))
 
 
 @users.route('/account')
@@ -69,7 +68,6 @@ def account():
     medicamentos = Medicamento.query.filter_by(
         user_id=current_user.id).paginate(page=page, per_page=2)
 
-    # print(f'User: {medicamentos}')
     formUser.username.data = user.nome
     formUser.cpf.data = user.cpf
     formUser.email.data = user.email
@@ -110,7 +108,7 @@ def reset_token(token):
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
-        login.password = hashed_password
+        login.senha = hashed_password
         db.session.commit()
         flash('Senha atualizada com sucesso! agora você pode logar!', 'success')
         return redirect(url_for('users.login'))

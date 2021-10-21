@@ -43,8 +43,8 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item ms-3"><a href="{{url_for('rota.about')}}" class="nav-link"><i class="fas fa-address-card me-2"></i>Sobre</a></li>
-                            <li class="nav-item ms-3"><a href="{{url_for('rota.contato')}}" class="nav-link"><i class="fas fa-user me-2"></i>Contato</a></li>
+                            <li class="nav-item ms-3"><a href="{{url_for('main.about')}}" class="nav-link"><i class="fas fa-address-card me-2"></i>Sobre</a></li>
+                            <li class="nav-item ms-3"><a href="{{url_for('main.contato')}}" class="nav-link"><i class="fas fa-user me-2"></i>Contato</a></li>
                             {% if current_user.is_authenticated %}
                                 <li class="nav-item ms-3"><a href="{{url_for('users.account')}}" class="nav-link"><i class="fas fa-cogs me-2"></i>Perfil</a></li>
                                 <li class="nav-item ms-3"><a href="{{url_for('users.logout')}}" class="nav-link"><i class="fas fa-sign-in-alt me-2"></i>Logout</a></li>
