@@ -48,7 +48,7 @@ body{
 }
 
 #site{
-    background-color: #F2DBD6;
+    background-color: rgb(211, 209, 209);
 }
 #site .container-fluid{
     padding: 0% 20%;
@@ -60,9 +60,12 @@ body{
 
 
 
+
 /* footer */
 #footer .container-fluid{
-    padding: 2% 20%;
+    /* padding: 2% 20%; */
+    padding: 2% 20% 17% 20%;
+    background-color: rgb(211, 209, 209);
 }
 
 #footer .row .imagem{

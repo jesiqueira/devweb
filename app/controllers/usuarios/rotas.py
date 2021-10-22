@@ -5,6 +5,7 @@ from app.models.models import Endereco, Medicamento, User, Login
 from app import db, bcrypt
 from app.controllers.usuarios.utils import send_reset_email
 from flask_login import login_user, current_user, logout_user, login_required
+from datetime import date
 
 users = Blueprint('users', __name__)
 
@@ -65,8 +66,9 @@ def account():
         Login, Login.user_id == User.id).join(Endereco, Endereco.user_id == User.id, isouter=True).filter(User.id == current_user.id).first()
 
     # medicamentos = Medicamento.query.filter_by(user_id=current_user.id).all()
-    medicamentos = Medicamento.query.filter_by(
-        user_id=current_user.id).paginate(page=page, per_page=2)
+    # medicamentos = Medicamento.query.filter_by(user_id=current_user.id).paginate(page=page, per_page=2)
+    medicamentos = db.session.query(Medicamento).filter(
+        Medicamento.user_id == current_user.id, Medicamento.data_validade >= date.today()).paginate(page=page, per_page=2)
 
     formUser.username.data = user.nome
     formUser.cpf.data = user.cpf
@@ -77,6 +79,7 @@ def account():
     formUser.bairro.data = user.bairro
 
     return render_template('account.html', title='Account', user=user, formRegistro=formUser, medicamentos=medicamentos)
+
 
 @users.route('/reset_password', methods=['GET', 'POST'])
 def reset_request():
