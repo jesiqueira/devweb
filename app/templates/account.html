@@ -37,14 +37,16 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="pills-medicamento-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-medicamento" type="button" role="tab"
-                                    aria-controls="pills-medicamento" aria-selected="false"><i class="fas fa-hand-holding-medical me-2"></i>Meus Medicamentos</button>
+                                    aria-controls="pills-medicamento" aria-selected="false"><i
+                                        class="fas fa-hand-holding-medical me-2"></i>Meus Medicamentos</button>
                             </li>
-                            <li class="nav-item" role="presentation">
+                            <!-- <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="pills-med-vencido-tab" data-bs-toggle="pill"
                                     data-bs-target="#pills-med-vencido" type="button" role="tab"
-                                    aria-controls="pills-med-vencido" aria-selected="false"><i class="fas fa-prescription-bottle-alt me-2"></i>Medicamentos
+                                    aria-controls="pills-med-vencido" aria-selected="false"><i
+                                        class="fas fa-prescription-bottle-alt me-2"></i>Medicamentos
                                     vencidos</button>
-                            </li>
+                            </li> -->
                         </ul>
                         <div class="tab-content" id="pills-tabContent">
                             <div class="tab-pane fade" id="pills-dados" role="tabpanel"
@@ -58,7 +60,7 @@
                                         {{formRegistro.cpf.label(class='form-label')}}
                                         {{formRegistro.cpf(class='form-control', disabled=true)}}
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="row mt-2">
                                     <div class="col-sm-6">
                                         {{formRegistro.email.label(class='form-label')}}
@@ -86,7 +88,8 @@
                                 <div class="col-12 mt-3">
                                     <ul class="nav justify-content-center">
                                         <li class="nav-item">
-                                            <a href="#" class="nav-link btn btn-outline-primary" role="button"><i class="fas fa-pen me-3"></i>Atualizar Dados</a>
+                                            <a href="#" class="nav-link btn btn-outline-primary" role="button"><i
+                                                    class="fas fa-pen me-3"></i>Atualizar Dados</a>
                                         </li>
                                         <!-- <li class="nav-item ms-2">
                                             <a href="#" class="nav-link btn btn-outline-secondary" role="button">Editar</a>
@@ -113,51 +116,53 @@
                                                 </thead>
                                                 <tbody>
                                                     {%for medicamento in medicamentos.items%}
-                                                        <tr>
-                                                            <th scope="row">{{medicamento.id}}</th>
-                                                            <td>{{medicamento.nome}}</td>
-                                                            <td>{{medicamento.data_validade.strftime('%d/%m/%Y')}}</td>
-                                                            <td class="overflow-hidden">{{medicamento.principio_ativo}}</td>
-                                                            <td>{{medicamento.posologia}}</td>
-                                                            <td>
-                                                                <a href="{{ url_for('medicine.view_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">Visualizar</a>
-                                                            </td>
-                                                            <!-- <td>
-                                                                <button type="button" class="btn btn-danger btn-sm" >DELETE</button>
-                                                            </td> -->
-                                                        </tr>
+                                                    <tr>
+                                                        <th scope="row">{{medicamento.id}}</th>
+                                                        <td>{{medicamento.nome}}</td>
+                                                        <td>{{medicamento.data_validade.strftime('%d/%m/%Y')}}</td>
+                                                        <td class="overflow-hidden">{{medicamento.principio_ativo}}</td>
+                                                        <td>{{medicamento.posologia}}</td>
+                                                        <td>
+                                                            <a href="{{ url_for('medicine.view_medicamento', medicamento_id = medicamento.id)}}"
+                                                                class="btn btn-success btn-sm"
+                                                                role="button">Visualizar</a>
+                                                        </td>
+                                                    </tr>
                                                     {%endfor%}
                                                 </tbody>
                                             </table>
-                                            {%for page_num in medicamentos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}
-                                                {% if page_num %}
-                                                    {% if medicamentos.page == page_num %}
-                                                        <a class="btn btn-info mb-3" href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
-                                                    {% else %}
-                                                        <a class="btn btn-outline-info mb-3" href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
-                                                    {% endif %}
-                                                {% else %}
-                                                    ...
-                                                {% endif %}
+                                            {%for page_num in medicamentos.iter_pages(left_edge=1, right_edge=1,
+                                            left_current=1, right_current=2)%}
+                                            {% if page_num %}
+                                            {% if medicamentos.page == page_num %}
+                                            <a class="btn btn-info mb-3"
+                                                href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
+                                            {% else %}
+                                            <a class="btn btn-outline-info mb-3"
+                                                href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
+                                            {% endif %}
+                                            {% else %}
+                                            ...
+                                            {% endif %}
                                             {%endfor%}
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <ul class="nav justify-content-center">
                                             <li class="nav-item">
-                                                <a href="{{url_for('medicine.medicamento')}}" class="nav-link btn btn-outline-primary" role="button"><i class="fas fa-pen me-3"></i>Cadastrar</a>
+                                                <a href="{{url_for('medicine.medicamento')}}"
+                                                    class="nav-link btn btn-outline-primary" role="button"><i
+                                                        class="fas fa-pen me-3"></i>Cadastrar</a>
                                             </li>
-                                            <!-- <li class="nav-item m-3">
-                                                <a href="#" class="nav-link btn btn-outline-secondary" role="button">Editar</a>
+                                            <li class="nav-item ms-2">
+                                                <a href="{{ url_for('medicine.medimento_vencido')}}" class="nav-link btn btn-outline-primary"
+                                                    role="button"><i class="fas fa-prescription-bottle-alt me-2"></i>Medic.Vencidos</a>
                                             </li>
-                                            <li class="nav-item m-3">
-                                                <a href="#" class="nav-link btn btn-outline-danger" role="button">Deletar</a>
-                                            </li> -->
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-med-vencido" role="tabpanel"
+                            <!-- <div class="tab-pane fade" id="pills-med-vencido" role="tabpanel"
                                 aria-labelledby="pills-med-vencido-tab">
                                 <div class="row">
                                     <div class="col-12">
@@ -173,50 +178,55 @@
                                                 </thead>
                                                 <tbody>
                                                     {%for medicamento in medicamentos.items%}
-                                                        <tr>
-                                                            <th scope="row">{{medicamento.id}}</th>
-                                                            <td>{{medicamento.nome}}</td>
-                                                            <td>{{medicamento.data_validade.strftime('%d/%m/%Y')}}</td>
-                                                            <td class="overflow-hidden">{{medicamento.principio_ativo}}</td>
-                                                            <td>{{medicamento.posologia}}</td>
-                                                            <td>
-                                                                <a href="{{ url_for('medicine.view_medicamento', medicamento_id = medicamento.id)}}" class="btn btn-success btn-sm" role="button">Visualizar</a>
-                                                            </td>
-                                                            <!-- <td>
+                                                    <tr>
+                                                        <th scope="row">{{medicamento.id}}</th>
+                                                        <td>{{medicamento.nome}}</td>
+                                                        <td>{{medicamento.data_validade.strftime('%d/%m/%Y')}}</td>
+                                                        <td class="overflow-hidden">{{medicamento.principio_ativo}}</td>
+                                                        <td>{{medicamento.posologia}}</td>
+                                                        <td>
+                                                            <a href="{{ url_for('medicine.view_medicamento', medicamento_id = medicamento.id)}}"
+                                                                class="btn btn-success btn-sm"
+                                                                role="button">Visualizar</a>
+                                                        </td> -->
+                                                        <!-- <td>
                                                                 <button type="button" class="btn btn-danger btn-sm" >DELETE</button>
                                                             </td> -->
-                                                        </tr>
-                                                    {%endfor%}
-                                                </tbody>
+                                                    <!-- </tr> -->
+                                                    <!-- {%endfor%} -->
+                                                <!-- </tbody>
                                             </table>
-                                            {%for page_num in medicamentos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)%}
-                                                {% if page_num %}
-                                                    {% if medicamentos.page == page_num %}
-                                                        <a class="btn btn-info mb-3" href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
-                                                    {% else %}
-                                                        <a class="btn btn-outline-info mb-3" href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
-                                                    {% endif %}
-                                                {% else %}
-                                                    ...
-                                                {% endif %}
+                                            {%for page_num in medicamentos.iter_pages(left_edge=1, right_edge=1,
+                                            left_current=1, right_current=2)%}
+                                            {% if page_num %}
+                                            {% if medicamentos.page == page_num %}
+                                            <a class="btn btn-info mb-3"
+                                                href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
+                                            {% else %}
+                                            <a class="btn btn-outline-info mb-3"
+                                                href="{{ url_for('users.account', page=page_num) }}">{{page_num}}</a>
+                                            {% endif %}
+                                            {% else %}
+                                            ...
+                                            {% endif %}
                                             {%endfor%}
-                                        </div>
-                                    </div>
+                                        </div> -->
+                                    <!-- </div>
                                     <div class="col-12">
                                         <ul class="nav justify-content-center">
                                             <li class="nav-item">
-                                                <a href="{{url_for('medicine.medicamento')}}" class="nav-link btn btn-outline-primary" role="button"><i class="fas fa-pen me-3"></i>Cadastrar</a>
-                                            </li>
-                                            <!-- <li class="nav-item m-3">
-                                                <a href="#" class="nav-link btn btn-outline-secondary" role="button">Editar</a>
-                                            </li>
+                                                <a href="{{url_for('medicine.medicamento')}}"
+                                                    class="nav-link btn btn-outline-primary" role="button"><i
+                                                        class="fas fa-pen me-3"></i>Cadastrar</a>
+                                            </li> -->
+                                            <!-- 
                                             <li class="nav-item m-3">
                                                 <a href="#" class="nav-link btn btn-outline-danger" role="button">Deletar</a>
                                             </li> -->
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                                        <!-- </ul>
+                                    </div> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
                         </div>
 
                     </div>

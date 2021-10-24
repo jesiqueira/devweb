@@ -3,8 +3,20 @@ from app.controllers.forms import MedicamentoForm
 from app.models.models import Medicamento
 from app import db
 from flask_login import current_user, login_required
+from datetime import date
 
 medicine = Blueprint('medicine', __name__)
+
+
+@medicine.route('/medicamemento/vencido')
+@login_required
+def medimento_vencido():
+    page = request.args.get('page', 1, type=int)
+    medicamento = db.session.query(Medicamento).filter(
+        Medicamento.user_id == current_user.id, Medicamento.data_validade <= date.today()).paginate(page=page, per_page=2)
+
+    return render_template('medicamento_vencido.html', medicamentos=medicamento, title='Medicamento vencido', legenda='Medicamento Vencido')
+
 
 @medicine.route('/medicamento/new', methods=['GET', 'POST'])
 @login_required
