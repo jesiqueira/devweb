@@ -1,11 +1,12 @@
 from flask import render_template, flash, redirect, url_for, Blueprint, request
 from app.controllers.forms import (LoginForm, RegistroForm, DadosUser,
                                    RequestResetForm, ResetPassowordForm)
+from app.controllers.usuarios.form import AtualizaDadosForm, AtualizarEnderecoForm
 from app.models.models import Endereco, Medicamento, User, Login
 from app import db, bcrypt
 from app.controllers.usuarios.utils import send_reset_email
 from flask_login import login_user, current_user, logout_user, login_required
-from datetime import date
+from datetime import date, time
 
 users = Blueprint('users', __name__)
 
@@ -29,6 +30,13 @@ def cadastro():
         flash('Cadastro Criado com sucesso! agora você pode logar!', 'success')
         return redirect(url_for('users.login'))
     return render_template('cadastro.html', title='Cadastro', form=form)
+
+
+@users.route('/atualizarDados')
+@login_required
+def atualizarDados():
+    form = AtualizaDadosForm()
+    return render_template('atualizarDados.html', title="Atualizar Dados", form=form)
 
 
 @users.route('/login', methods=['GET', 'POST'])

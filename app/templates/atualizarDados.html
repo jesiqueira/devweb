@@ -1,0 +1,68 @@
+{%extends 'layout.html' %}
+
+{% block content%}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <img src="{{url_for('static', filename='img/default.jpeg')}}" alt=""
+                class="rounded-circle account-img img-fluid">
+        </div>
+        <div class="col-8">
+            <h1 class="display-1 text-danger">Olá!</h1>
+            <h4>Mantenha seus Dados sempre atualizadados</h4>
+        </div>
+    </div>
+    <br><br>
+    <form action="" method="POST">
+        {{ form.hidden_tag()}}
+        <!-- <legend class="border-bottom mb-4 mt-4">Preencha dados do Formulário</legend> -->
+        <div class="form-floating mb-3">
+            {% if form.username.errors %}
+                {{form.username(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.username.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.username(class='form-control', placeholder="Digite seu Username")}}
+            {% endif %}
+
+            {{form.username.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.cpf.errors %}
+                {{form.cpf(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.cpf.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.cpf(class='form-control', placeholder="Digite seu cpf")}}
+            {% endif %}
+
+            {{form.cpf.label()}}
+        </div>
+        <div class="form-floating mb-3">
+            {% if form.email.errors %}
+                {{ form.email(class='form-control is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor%}
+                </div>
+            {% else %}
+                {{form.email(class='form-control', placeholder="email@email.com")}}
+            {% endif %}
+            {{form.email.label()}}
+        </div>
+       
+       
+        <div class="form-group mt-5">
+        </div>
+    </form>
+
+    <hr class="mt-5">
+</div>
+{% endblock %}

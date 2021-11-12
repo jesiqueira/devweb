@@ -1,3 +1,4 @@
+from typing import ClassVar
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, BooleanField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
@@ -67,11 +68,13 @@ class DadosUser(FlaskForm):
 
 
 class MedicamentoForm(FlaskForm):
-    nome = StringField('Medicamento', validators=[DataRequired(), Length(min=5, max=40)])
+    nome = StringField('Medicamento', validators=[
+                       DataRequired(), Length(min=5, max=40)])
     dataValidade = DateField('Data Validade', validators=[DataRequired()])
     principioAtivo = TextAreaField(
         'Principio Ativo', validators=[DataRequired(), Length(min=20, max=400)])
-    posologia = TextAreaField('Posologia', validators=[DataRequired(), Length(min=20, max=400)])
+    posologia = TextAreaField('Posologia', validators=[
+                              DataRequired(), Length(min=20, max=400)])
 
     submit = SubmitField('Salvar')
 
@@ -83,7 +86,9 @@ class RequestResetForm(FlaskForm):
     def validate_email(self, email):
         email = Login.query.filter_by(email=email.data).first()
         if email is None:
-            raise ValidationError('Não encontramos esse e-mail em nossa base, informe e-mail diferente ou Cadastra-se.')
+            raise ValidationError(
+                'Não encontramos esse e-mail em nossa base, informe e-mail diferente ou Cadastra-se.')
+
 
 class ResetPassowordForm(FlaskForm):
     password = PasswordField('Senha', validators=[DataRequired()])
